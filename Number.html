@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+ <center>
+  <h1 style="margin: 100px;">Sayı Tahmini</h1>
+  <h2>Lütfen 0 ile 100 arasında bir sayı giriniz..</h2>
+</center>
+  <div id="sayiTahmin">
+    <input type="text" id="sayi" />
+    <button id="tahminEt" disabled >Tahmin Et</button>
+    <button id="yeniOyun">Yeni OYUN</button>
+   
+    <p id="sonuc"></p>
+  </div>
+  <canvas id="canvas"></canvas>
+</head>
+ 
+<body>
+  <style>
+    a{
+      border-style: solid;
+      border-color: red;
+    }
+    p
+    {
+      font-family: 'Times New Roman', Times, serif;
+      color: aliceblue;
+      font-size: 16px;
+
+    }
+    h2{
+      font-family: 'Times New Roman', Times, serif;
+      color: aliceblue;
+      font-size: 25px;
+    }
+    h1 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 55px;
+      color:aliceblue;
+     
+    }
+    
+    html {
+      margin: 0px;
+      padding: 0px;
+      position: fixed;
+      background-image: url('https://external-preview.redd.it/Tf2MC-orVRAI8OL5tjyF4k4H2Q6QLHTWllekGfqdt3c.png?width=960&crop=smart&auto=webp&s=be4ab9a2fa3ca2f7011799377f118a8dbc64aacb');
+      background-size: cover;
+    }
+    canvas{
+      filter: blur(1px);
+    }</style>
+    <script>
+      var dizi = []; 
+      let c = init("canvas"),
+      w = (canvas.width = window.innerWidth),
+      h = (canvas.height = window.innerHeight);
+      mesaj.fillStyle
+     
+
+  
+    class firefly{
+      constructor(){
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        this.s = Math.random()*2;
+        this.ang = Math.random()*2*Math.PI;
+        this.v = this.s*this.s/4;
+      }
+      move(){
+        this.x += this.v*Math.cos(this.ang);
+        this.y += this.v*Math.sin(this.ang);
+        this.ang += Math.random()*20*Math.PI/180-10*Math.PI/180;
+      }
+      show(){
+        c.beginPath();
+        c.arc(this.x,this.y,this.s,0,2*Math.PI);
+        c.fillStyle="#fddba3";
+        c.fill();
+      }
+    }
+    
+    let f = [];
+    
+    function draw() {
+      if(f.length < 100){
+        for(let j = 0; j < 10; j++){
+         f.push(new firefly());
+      }
+         }
+  
+      for(let i = 0; i < f.length; i++){
+        f[i].move();
+        f[i].show();
+        if(f[i].x < 0 || f[i].x > w || f[i].y < 0 || f[i].y > h){
+           f.splice(i,1);
+           }
+      }
+    }
+    
+    let mouse = {};
+    let last_mouse = {};
+    
+    canvas.addEventListener(
+      "mousemove",
+      function(e) {
+        last_mouse.x = mouse.x;
+        last_mouse.y = mouse.y;
+    
+        mouse.x = e.pageX - this.offsetLeft;
+        mouse.y = e.pageY - this.offsetTop;
+      },
+      false
+    );
+    function init(elemid) {
+      let canvas = document.getElementById(elemid),
+        c = canvas.getContext("2d"),
+        w = (canvas.width = window.innerWidth),
+        h = (canvas.height = window.innerHeight);
+      c.fillStyle = "rgba(30,30,30,1)";
+      c.fillRect(0, 0, w, h);
+      return c;
+    }
+    
+    window.requestAnimFrame = (function() {
+      return (
+        window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          window.setTimeout(callback);
+        }
+      );
+    });
+
+    
+    
+    function loop() {
+      window.requestAnimFrame(loop);
+      c.clearRect(0, 0, w, h);
+      draw();
+    }
+    
+    window.addEventListener("resize", function() {
+      (w = canvas.width = window.innerWidth),
+      (h = canvas.height = window.innerHeight);
+      loop();
+    });
+    
+    loop();
+    setInterval(loop, 1000 / 60);</script>
+ 
+  <style>
+    #sayiTahmin {
+      width: 100%;
+      text-align: center;
+    }
+  
+    input,
+    button {
+      padding: 20px;
+      text-align: center;
+      background-color: aliceblue;
+    }
+    
+  </style>
+  <script>
+    const yeni =()=> {
+      rastgeleSayi = randomInt(0, 99);
+      hakSayisi = 10;
+      _sonuc.innerHTML = "";
+      _sayi.value = "";
+      _tahminEt.disabled = false;
+      _yeniOyun.disabled = true;
+      
+    }
+            var hakSayisi = 0;
+            var rastgeleSayi = 0;
+            var _tahminEt = document.getElementById("tahminEt");
+            
+            var _yeniOyun = document.getElementById("yeniOyun");
+            var _sonuc = document.getElementById("sonuc");
+            var _sayi = document.getElementById("sayi");
+          
+            _yeniOyun.addEventListener("click", yeni);
+            _tahminEt.onclick = tahmin;
+          
+             function randomInt(min, max) {
+              return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+          
+            
+            
+            function tahmin() {
+              if(dizi.includes(_sayi.value)){
+                alert("Lüften farklı sayı giriniz!!!");
+                return;
+              }
+              if(_sayi.value=="")
+              {
+                alert("Lütfen sayı giriniz!!")
+              }
+              if(_sayi.value > 100 || _sayi.value < 0)
+              {
+                alert("Girilen sayı 100 den küçük, 0 dan büyük olmalıdır!");
+                return;
+              };
+              dizi.push(_sayi.value);
+              if (hakSayisi == 0) return;
+              var girilenSayi = parseInt(_sayi.value);
+              var mesaj =("");
+              if (isNaN(girilenSayi)) return;
+          
+              if (rastgeleSayi > girilenSayi) {
+                mesaj = "Sayı"+"   "+girilenSayi+"ile 100 arasındadır.";
+              } else if (girilenSayi > rastgeleSayi) {
+                mesaj = "Sayı"+"   "+girilenSayi+"ile 0 arasındadır.";
+              } else {
+                mesaj = "Tebrikler!!!";
+                _tahminEt.disabled = true;
+                _yeniOyun.disabled = false;
+                
+              }
+              if(_sayi.value-rastgeleSayi>0&_sayi.value-rastgeleSayi<10||rastgeleSayi-_sayi.value>0&rastgeleSayi-_sayi.value<10){
+                alert("Çok Yaklaştın!(Bulman Gereken Sayıyla fark 10'dan az!!)")
+              }
+              hakSayisi--;
+              _sonuc.innerHTML = mesaj
+              _sonuc.innerHTML += "<br />"
+              _sonuc.innerHTML += "Kalan hak sayısı : " + hakSayisi
+              if (hakSayisi == 0) {
+                _tahminEt.disabled = true;
+                _yeniOyun.disabled = false;
+              }
+            }
+            
+          </script>
+
+  
+</body>
+</html>
